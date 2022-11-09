@@ -1,0 +1,113 @@
+#:import track track
+#:import play_indicator play_indicator
+
+MainWidget:
+
+<VerticalSpacingWidget>:
+    size_hint_y: 0.01
+
+<ControlButton@Button>:
+
+<MainWidget>:
+    tracks_boxlayout : id_tracks_boxlayout
+    play_indicator_widget : id_play_indicator_widget
+    label_bpm : id_label_bpm
+
+    BoxLayout :
+        orientation: "vertical"
+
+        # TOP LAYOUT
+        RelativeLayout :
+            size_hint_y: None
+            height: dp(60)
+            Image:
+                source: "images/background.png"
+                allow_stretch: True
+                keep_ratio: False
+            Image:
+                source: "images/logo.png"
+                pos_hint: {"left":1,"center_y":0.5}    # positionne la gauche du bouton à gauche du widget
+                size_hint: None, None
+                width: dp(300)
+                height: root.height
+                allow_stretch: True
+            BoxLayout:
+                pos_hint: {"center_x":0.5,"center_y":0.5}  # positionne le centre du bouton au centre du widget
+                size_hint: None, None
+                width: dp(220)
+                padding: dp(20), dp(10)
+                ControlButton:
+                    on_press : root.on_press_start_button()
+                    background_normal: "images/play_button_normal.png"
+                    background_down: "images/play_button_down.png"
+                ControlButton:
+                    on_press : root.on_press_stop_button()
+                    background_normal: "images/stop_button_normal.png"
+                    background_down: "images/stop_button_down.png"
+            BoxLayout:
+                pos_hint: {"right":1, "center_y":0.5} # positionne la droite du bouton à droite du widget
+                size_hint: None, None
+                width: dp(240)
+                padding: dp(20), dp(10)
+                ControlButton:
+                    size_hint_x: None
+                    width: dp(50)
+                    background_normal: "images/minus_button_normal.png"
+                    background_down: "images/minus_button_down.png"
+                    on_press : root.screen_bpm = root.screen_bpm -5 if root.screen_bpm >= root.BPM_MIN+5 else root.BPM_MIN
+                RelativeLayout:
+                    Image:
+                        source: "images/bpm_lcd_background.png"
+                        size_hint_y: None
+                        height: self.parent.height - dp(12)
+                        pos_hint: {"center_x":0.5, "center_y":0.5} # positionne la droite du bouton à droite du widget
+                    Label:
+                        text : "888"
+                        font_name: "fonts/Lcd.ttf"
+                        font_size: dp(36)
+                        pos : 0, dp(2)
+                        opacity: .1
+                        color: 0, 1, 1 , 1
+                    Label:
+                        id: id_label_bpm
+                        text : "{:>3}".format(str(root.screen_bpm))
+                        font_name: "fonts/Lcd.ttf"
+                        font_size: dp(36)
+                        pos : 0, dp(2)
+                ControlButton:
+                    size_hint_x: None
+                    width: dp(50)
+                    background_normal: "images/plus_button_normal.png"
+                    background_down: "images/plus_button_down.png"
+                    on_press : root.screen_bpm = root.screen_bpm +5 if root.screen_bpm <= root.BPM_MAX-5 else root.BPM_MAX
+
+
+#        BoxLayout :
+#            size_hint_y: None
+#            height: dp(50)
+#            Button:
+#                size_hint_x: None
+#                width: dp(100)
+#                active: False
+
+        # BOTTOM LAYOUT
+        RelativeLayout :
+            Image:
+                source: "images/background2.png"
+                allow_stretch : True
+                keep_ratio: False
+            BoxLayout:
+                orientation: "vertical"
+                padding : dp(16)
+                PlayIndicatorWidget:
+                    id : id_play_indicator_widget
+                    size_hint_y: None
+                    height: dp(18)
+                ScrollView:
+                    do_scroll_x : False
+                    do_scroll_x : True
+                    BoxLayout:
+                        id: id_tracks_boxlayout
+                        orientation: "vertical"
+#                        size_hint_min_y: root.track_widget_size_max * root.nb_tracks
+                        # Puis affiche les TrackWidgets dans on_parent
