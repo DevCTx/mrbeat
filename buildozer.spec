@@ -1,7 +1,7 @@
 [app]
 
 # (str) Title of your application
-title = Mr Beat
+title = MrBeat
 
 # (str) Package name
 package.name = mrbeat
