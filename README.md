@@ -1,5 +1,5 @@
 # mrbeat
-Beatbox program developed during my Python training with www.CodeAvecJonathan.com
+Beatbox program developed in Python during my online class with [www.CodeAvecJonathan.com](https://codeavecjonathan.com/)
 
 Built with build.yml file in .github/workflows from https://github.com/marketplace/actions/buildozer-action
 
